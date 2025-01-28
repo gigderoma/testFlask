@@ -810,7 +810,7 @@ def perform_inference(image):
 
 
 @bp.route('/testai', methods=['GET', 'POST'])
-@custom_authmodule
+
 def testai():
     if request.method == 'POST':
         # Check if the post request has the file part
