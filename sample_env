@@ -14,7 +14,7 @@ export APP_MODULE="runapp:app"
 export MYSQL_DATABASE="testdb"
 export SECRET_NAME="my-secret"
 export REPO_SECRET_NAME="repo-secret"
-export CODE_URL=https://github.com/MoOyeg/testFlask.git
+export CODE_URL=https://github.com/gigderoma/testFlask.git
 
 #Jenkins
 export JENKINS_NAMESPACE="1234-jenkins"
