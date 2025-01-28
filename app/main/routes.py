@@ -819,12 +819,12 @@ def index():
         # If user does not select file, browser also
         # submit an empty part without filename
         if file.filename == '':
-            return render_template('index.html', message='No selected file')
+            return render_template('testai.html', message='No selected file')
         if file:
             # Perform inference
             file.save('image.jpg')
             img = load_image('image.jpg')
             result = perform_inference(img)
             return render_template('result.html', prediction=result)
-    return render_template('index.html')
+    return render_template('testai.html')
 
