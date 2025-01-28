@@ -791,7 +791,7 @@ def perform_inference(image):
     image_flat = image_to_flat_array(image_processed)
     image_json = image_to_json(image_flat)
     # Send request to OpenVINO server
-    url = '<insert_inference_url>'
+    url = 'https://data-server-demo-ai-gig.openshiftai-cluster-gig-e78f23787c77651c3692e4428c776eaa-0000.eu-gb.containers.appdomain.cloud/v2/models/data-server/infer'
     headers = {'Content-Type': 'application/json'}
     try:
         response = requests.post(url, data=image_json, headers=headers)
