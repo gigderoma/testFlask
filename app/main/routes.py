@@ -8,6 +8,8 @@ Module contains flask routing logic for application
 # pylint: disable=bare-except
 # pylint: disable=global-statement
 
+
+
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, \
     jsonify, current_app, make_response, has_app_context
