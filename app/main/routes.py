@@ -809,8 +809,9 @@ def perform_inference(image):
         return "Error: {}".format(e)
 
 
-@app.route('/testai', methods=['GET', 'POST'])
-def index():
+@bp.route('/testai', methods=['GET', POST'])
+@custom_authmodule
+def testai():
     if request.method == 'POST':
         # Check if the post request has the file part
         if 'file' not in request.files:
