@@ -9,8 +9,8 @@ ENV APP_SCRIPT ./runapp.sh
 ENV DOCKERFILE_RUN true
 
 # Install the required software
-RUN yum update -y && yum install git python38 -y
-RUN yum install mesa-libGL
+RUN yum update -y && yum install git python38 mesa-libGL -y
+
 
 # Install pip
 #RUN curl -O https://bootstrap.pypa.io/pip/3.6/get-pip.py && python3 get-pip.py && python3 get-pip.py
