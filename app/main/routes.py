@@ -809,7 +809,7 @@ def perform_inference(image):
         return "Error: {}".format(e)
 
 
-@bp.route('/testai', methods=['GET', POST'])
+@bp.route('/testai', methods=['GET', 'POST'])
 @custom_authmodule
 def testai():
     if request.method == 'POST':
