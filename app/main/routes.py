@@ -814,7 +814,7 @@ def index():
     if request.method == 'POST':
         # Check if the post request has the file part
         if 'file' not in request.files:
-            return render_template('index.html', message='No file part')
+            return render_template('testai.html', message='No file part')
         file = request.files['file']
         # If user does not select file, browser also
         # submit an empty part without filename
