@@ -36,7 +36,7 @@
 - Source Environment Variables
 
   ```bash
-  eval "$(curl https://raw.githubusercontent.com/MoOyeg/testFlask/master/sample_env)"
+  eval "$(curl https://raw.githubusercontent.com/gigderoma/testFlask/master/sample_env)"
   ```
 
 - Create necessary projects  
