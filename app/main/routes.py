@@ -10,7 +10,7 @@ Module contains flask routing logic for application
 
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, \
-    jsonify, current_app, make_response, has_app_context
+    jsonify, current_app, make_response, has_app_context, Flask
 from functools import wraps
 from flask_openid import OpenID
 from flask_login import current_user, login_required
@@ -24,6 +24,11 @@ import requests
 import sys
 from config import myclassvariables
 from random import randrange
+
+
+import json
+import numpy as np
+import cv2
 
 # Initalize Variables
 # Used as flag to store application health
@@ -738,3 +743,88 @@ def logout(**kwargs):
 def display_unuauthenticated():
     '''Display Unauthenticated Error Page'''
     return render_template('unknown-user.html')
+
+
+
+
+
+
+app = Flask(__name__)
+# Function to preprocess image (replace this with your actual preprocessing function)
+def preprocess_image(img):
+    # Resize image to minimum size of 256x256 while maintaining aspect ratio
+    min_size = min(img.shape[:2])
+    scale_factor = 256 / min_size
+    new_size = (int(img.shape[1] * scale_factor), int(img.shape[0] * scale_factor))
+    img_resized = cv2.resize(img, new_size)
+    # Crop 224x224 from the center
+    center_x = new_size[0] // 2
+    center_y = new_size[1] // 2
+    half_crop = 112
+    img_cropped = img_resized[center_y - half_crop:center_y + half_crop, center_x - half_crop:center_x + half_crop]
+    # Normalize pixel values
+    mean = np.array([0.485, 0.456, 0.406]) * 255
+    std = np.array([0.229, 0.224, 0.225]) * 255
+    img_normalized = (img_cropped - mean) / std
+    # Transpose image from HWC to CHW layout
+    img_transposed = np.transpose(img_normalized, (2, 0, 1))
+    return img_transposed
+def load_image(image_path):
+    return cv2.imread(image_path)
+# Function to convert image data to flat array
+def image_to_flat_array(image_data):
+    return image_data.flatten().tolist()
+# Function to convert image data to JSON format
+def image_to_json(image_data):
+    return json.dumps({"inputs": [{"name": "data", "shape": [1, 3, 224, 224], "datatype": "FP32", "data": image_data}]})
+# Function to load class labels
+def load_class_labels():
+    with open('imagenet_classes.txt', 'r') as f:
+        class_labels = f.read().splitlines()
+    return class_labels
+# Function to perform inference
+def perform_inference(image):
+    # Preprocess image
+    image_processed = preprocess_image(image)
+    
+    # Convert image to flat array and JSON format
+    image_flat = image_to_flat_array(image_processed)
+    image_json = image_to_json(image_flat)
+    # Send request to OpenVINO server
+    url = '<insert_inference_url>'
+    headers = {'Content-Type': 'application/json'}
+    try:
+        response = requests.post(url, data=image_json, headers=headers)
+        if response.status_code == 200:
+            # Parse response
+            results = json.loads(response.text)
+            # Get class labels
+            class_labels = load_class_labels()
+            # Get the top-1 prediction
+            predictions = np.array(response.json()['outputs'][0]['data'])
+            top_prediction_idx = np.argmax(predictions)
+            top_prediction_label = class_labels[top_prediction_idx]
+            return top_prediction_label
+    except Exception as e:
+        return "Error: {}".format(e)
+
+
+@app.route('/testai', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        # Check if the post request has the file part
+        if 'file' not in request.files:
+            return render_template('index.html', message='No file part')
+        file = request.files['file']
+        # If user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            return render_template('index.html', message='No selected file')
+        if file:
+            # Perform inference
+            file.save('image.jpg')
+            img = load_image('image.jpg')
+            result = perform_inference(img)
+            return render_template('result.html', prediction=result)
+    return render_template('index.html')
+
