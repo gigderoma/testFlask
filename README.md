@@ -8,28 +8,28 @@
 
 ### Module 1: testFlask - Main Application(This Page)
 
-  1. [s2i Build](https://github.com/MoOyeg/testFlask#source-environment-variables)  
-  2. [Git Webhooks](https://github.com/MoOyeg/testFlask#webhooks)  
-  3. [Openshift Health Checks](https://github.com/MoOyeg/testFlask#health-checks)  
-  4. [Horizontal Autoscaling](https://github.com/MoOyeg/testFlask#horizontal-autoscaling-with-cpumemory)  
-  5. [Vertical Autoscaling](https://github.com/MoOyeg/testFlask#vertical-pod-autoscaler)  
-  6. [User Workload Monitoring](https://github.com/MoOyeg/testFlask#monitoring-and-autoscaling-application-metrics)  
-  7. [Serverless Example](https://github.com/MoOyeg/testFlask#openshift-serverless)  
-  8. [Async Python Example](https://github.com/MoOyeg/testFlask/tree/quart)  
+  1. [s2i Build](https://github.com/gigderoma/testFlask#source-environment-variables)  
+  2. [Git Webhooks](https://github.com/gigderoma/testFlask#webhooks)  
+  3. [Openshift Health Checks](https://github.com/gigderoma/testFlask#health-checks)  
+  4. [Horizontal Autoscaling](https://github.com/gigderoma/testFlask#horizontal-autoscaling-with-cpumemory)  
+  5. [Vertical Autoscaling](https://github.com/gigderoma/testFlask#vertical-pod-autoscaler)  
+  6. [User Workload Monitoring](https://github.com/gigderoma/testFlask#monitoring-and-autoscaling-application-metrics)  
+  7. [Serverless Example](https://github.com/gigderoma/testFlask#openshift-serverless)  
+  8. [Async Python Example](https://github.com/gigderoma/testFlask/tree/quart)  
 
-### Module 2: [Custom s2i Images](https://github.com/MoOyeg/s2i-python-custom.git) - Create Custom s2i Images for Python Applications  
+### Module 2: [Custom s2i Images](https://github.com/gigderoma/s2i-python-custom.git) - Create Custom s2i Images for Python Applications  
 
-### Module 3: [testFlask-Jenkins](https://github.com/MoOyeg/testFlask-Jenkins) - Create Same Application with a Jenkins Pipeline in OpenShift  
+### Module 3: [testFlask-Jenkins](https://github.com/gigderoma/testFlask-Jenkins) - Create Same Application with a Jenkins Pipeline in OpenShift  
 
-### Module 4: [testFlask-Tekton](https://github.com/MoOyeg/testFlask-tekton) - Create Same Application with a Tekton Pipeline in OpenShift  
+### Module 4: [testFlask-Tekton](https://github.com/gigderoma/testFlask-tekton) - Create Same Application with a Tekton Pipeline in OpenShift  
 
-### Module 5: [testFlask-Oauth](https://github.com/MoOyeg/testFlask-Oauth-Proxy) - Application authentication using OpenShift Oauth Proxy  
+### Module 5: [testFlask-Oauth](https://github.com/gigderoma/testFlask-Oauth-Proxy) - Application authentication using OpenShift Oauth Proxy  
 
-### Module 6: [testflask-gitops](https://github.com/MoOyeg/testflask-gitops) - ArgoCD Application Continous Deployment  
+### Module 6: [testflask-gitops](https://github.com/gigderoma/testflask-gitops) - ArgoCD Application Continous Deployment  
 
-### Module 7: [testflask-helm-repo](https://github.com/MoOyeg/testflask-helm-repo) - Deploy the Same Application via Helm  
+### Module 7: [testflask-helm-repo](https://github.com/gigderoma/testflask-helm-repo) - Deploy the Same Application via Helm  
 
-### Module 8: [python-openshift-remote-debugging-vscode-example](https://github.com/MoOyeg/python-openshift-remote-debugging-vscode-example) - Remote Debugging Application
+### Module 8: [python-openshift-remote-debugging-vscode-example](https://github.com/gigderoma/python-openshift-remote-debugging-vscode-example) - Remote Debugging Application
 
 ### Steps to Build and Run Application  
 
@@ -78,12 +78,12 @@ Create Secret in OpenShift for Private/Cluster, example is for github ssh key
 
   - Example of creating application from a Private Repo with Source Secret(s2i Building)
     ```bash
-    oc new-app python:3.8~git@github.com:MoOyeg/testFlask.git --name=$APP_NAME --source-secret$REPO_SECRET_NAME -l app=testflask --strategy=source  --env=APP_CONFIG=./gunicorn/gunicorn.conf.py --env=APP_MODULE=runapp:app --env=MYSQL_HOST=$MYSQL_HOST --env=MYSQL_DATABASE=$MYSQL_DATABASE -n $NAMESPACE_DEV
+    oc new-app python:3.8~git@github.com:gigderoma/testFlask.git --name=$APP_NAME --source-secret$REPO_SECRET_NAME -l app=testflask --strategy=source  --env=APP_CONFIG=./gunicorn/gunicorn.conf.py --env=APP_MODULE=runapp:app --env=MYSQL_HOST=$MYSQL_HOST --env=MYSQL_DATABASE=$MYSQL_DATABASE -n $NAMESPACE_DEV
     ```
 
   - Example of creating application from Public Repo without Source Secret(s2i Building)  
     ```bash
-    oc new-app python:3.8~https://github.com/MoOyeg/testFlask.git --name=$APP_NAME -l app=testflask --strategy=source --env=APP_CONFIG=./gunicorn/gunicorn.conf.py --env=APP_MODULE=runapp:app --env=MYSQL_HOST=$MYSQL_HOST --env=MYSQL_DATABASE=$MYSQL_DATABASE -n $NAMESPACE_DEV
+    oc new-app python:3.8~https://github.com/gigderoma/testFlask.git --name=$APP_NAME -l app=testflask --strategy=source --env=APP_CONFIG=./gunicorn/gunicorn.conf.py --env=APP_MODULE=runapp:app --env=MYSQL_HOST=$MYSQL_HOST --env=MYSQL_DATABASE=$MYSQL_DATABASE -n $NAMESPACE_DEV
     ``` 
 
   - Example of creating application from Public Repo using the Dockerfile to build(Docker Strategy)  
@@ -91,7 +91,7 @@ Create Secret in OpenShift for Private/Cluster, example is for github ssh key
     oc tag --source=docker registry.redhat.io/ubi8/ubi:latest ubi8:latest -n openshift
     ```
     ```bash
-    oc new-app https://github.com/MoOyeg/testFlask.git --name=$APP_NAME -l app=testflask --env=MYSQL_HOST=$MYSQL_HOST --env=MYSQL_DATABASE=$MYSQL_DATABASE -n $NAMESPACE_DEV --strategy=docker
+    oc new-app https://github.com/gigderoma/testFlask.git --name=$APP_NAME -l app=testflask --env=MYSQL_HOST=$MYSQL_HOST --env=MYSQL_DATABASE=$MYSQL_DATABASE -n $NAMESPACE_DEV --strategy=docker
     ```
   
 - Externalizing Application configuration from application code is good practise. We will patch environment Details with Configuration information from Configmap and DownWardAPI.We externalize configration in configmap to allow changes without updating code. We are using the DownWardAPI patch to provide platform details to our application.
@@ -107,7 +107,7 @@ Create Secret in OpenShift for Private/Cluster, example is for github ssh key
 
   - Provide Platform Information to Application via a patch and request to Kubernetes API.
     ```bash
-    oc patch deploy/$APP_NAME --patch "$(curl https://raw.githubusercontent.com/MoOyeg/testFlask/master/patch-env.json | envsubst)" -n $NAMESPACE_DEV
+    oc patch deploy/$APP_NAME --patch "$(curl https://raw.githubusercontent.com/gigderoma/testFlask/master/patch-env.json | envsubst)" -n $NAMESPACE_DEV
     ```
 
 - Expose the service to the outside world with an OpenShift route  
@@ -332,10 +332,10 @@ Build and Alternate version of the testflask application using ASGI and Uvicorn*
 
 - Build custom builder image of uvicorn(Sample provided)  
      ```bash
-     oc new-build https://github.com/MoOyeg/s2i-python-custom.git --name=s2i-ubi8-uvicorn --context-dir=s2i-ubi8-uvicorn -n $NAMESPACE_DEV
+     oc new-build https://github.com/gigderoma/s2i-python-custom.git --name=s2i-ubi8-uvicorn --context-dir=s2i-ubi8-uvicorn -n $NAMESPACE_DEV
      ```
 
 - Build Application Image using previous image with custom gunicorn worker  
      ```bash
-     oc new-app s2i-ubi8-uvicorn~https://github.com/MoOyeg/testFlask.git#quart --name=testquart -l app=testquart --strategy=source --env=APP_CONFIG=gunicorn-uvi.conf --env=APP_MODULE=testapp:app --env CUSTOM_WORKER="true" -n $NAMESPACE_DEV
+     oc new-app s2i-ubi8-uvicorn~https://github.com/gigderoma/testFlask.git#quart --name=testquart -l app=testquart --strategy=source --env=APP_CONFIG=gunicorn-uvi.conf --env=APP_MODULE=testapp:app --env CUSTOM_WORKER="true" -n $NAMESPACE_DEV
      ```
