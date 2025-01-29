@@ -29,7 +29,7 @@ def create_app(config_class=Config):
     # app.config['DEBUG'] = True
     app.config.from_object(config_class)
     #Check if we are running in Kubernetes by getting environment variables
-    if app.config['KUBERNETES_SERVICE_PORT'] != "" 
+    if app.config['KUBERNETES_SERVICE_PORT'] != "" :
         #If Environment variable is not set we are not running in kubernetes
         #We will change the default handler to log to stdout
         app.logger.removeHandler(default_handler)
