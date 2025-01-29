@@ -1,7 +1,7 @@
 '''App Entrypoint For Gunicorn'''
 import os
 from app import create_app
-from debugger import initialize_debugger
+
 from logging import getLogger,basicConfig,DEBUG,getLogger,StreamHandler
 from sys import stdout
 
