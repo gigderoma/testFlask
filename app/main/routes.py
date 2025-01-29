@@ -10,20 +10,16 @@ Module contains flask routing logic for application
 
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, \
-    jsonify, current_app, make_response, has_app_context, Flask
-from functools import wraps
-from flask_openid import OpenID
-from flask_login import current_user, login_required
-from app import db
+    jsonify, current_app, make_response, has_app_context
+
+
 from app.main import bp
-from app.main.forms import PostForm
 from app.errors import ValidationError
 from app.models import User, Note, InsertCountMetric, DeleteCountMetric
 from config import Config
 import requests
 import sys
 from config import myclassvariables
-from random import randrange
 
 
 import json
@@ -35,9 +31,9 @@ import cv2
 HEALTH_STATUS_OK = True
 # Used as flag to store application readiness
 READY_STATUS_OK = True
-# Duplicate Key in DB Error Message
 
-ANONYMOUS_ACCESS_FUNCTIONS = ["ready"]
+
+
 
 
 
@@ -56,7 +52,6 @@ def check_health():
 def check_ready():
     """ Simulates Application Readiness for Kubernetes Probes
         Will Store Application Health in Variable READY_STATUS_OK for now """
-    # insertime = datetime.utcnow()
     if READY_STATUS_OK:
         current_app.logger.info(
             "Checking if Application is Ready - Application is Ready")
@@ -64,49 +59,6 @@ def check_ready():
         current_app.logger.error(
             "Checking if Application is Ready - Application is not Ready")
     return READY_STATUS_OK
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @bp.route('/health', methods=['GET'])
@@ -125,19 +77,6 @@ def ready(**kwargs):
     if check_ready():
         return make_response(jsonify({'Status': 'Ready'}), 200)
     return make_response(jsonify({'Status': 'Unavailable'}), 503)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # app = Flask(__name__)
@@ -175,7 +114,7 @@ def image_to_json(image_data):
     
 # Function to load class labels
 def load_class_labels():
-    with open('imagenet_classes.txt', 'r') as f:
+    with open('./app/imagenet_classes.txt', 'r') as f:
         class_labels = f.read().splitlines()
     return class_labels
     
