@@ -14,8 +14,8 @@ from flask import render_template, flash, redirect, url_for, request, g, \
 
 
 from app.main import bp
-from app.errors import ValidationError
-from app.models import User, Note, InsertCountMetric, DeleteCountMetric
+
+
 from config import Config
 import requests
 import sys
