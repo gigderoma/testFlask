@@ -140,7 +140,7 @@ def ready(**kwargs):
 
 
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 # Function to preprocess image (replace this with your actual preprocessing function)
 def preprocess_image(img):
@@ -207,22 +207,23 @@ def perform_inference(image):
 
 
 @bp.route('/', methods=['GET', 'POST'])
+@bp.route('/index', methods=['GET', 'POST'])
 
-def testai():
+def index():
     if request.method == 'POST':
         # Check if the post request has the file part
         if 'file' not in request.files:
-            return render_template('testai.html', message='No file part')
+            return render_template('index.html', message='No file part')
         file = request.files['file']
         # If user does not select file, browser also
         # submit an empty part without filename
         if file.filename == '':
-            return render_template('testai.html', message='No selected file')
+            return render_template('index.html', message='No selected file')
         if file:
             # Perform inference
             file.save('image.jpg')
             img = load_image('image.jpg')
             result = perform_inference(img)
             return render_template('result.html', prediction=result)
-    return render_template('testai.html')
+    return render_template('index.html')
 
