@@ -62,7 +62,6 @@ def check_ready():
 
 
 @bp.route('/health', methods=['GET'])
-@custom_authmodule
 def health(**kwargs):
     '''Provide Application Health Status to the Outside World'''
     if check_health():
@@ -71,7 +70,6 @@ def health(**kwargs):
 
 
 @bp.route('/ready', methods=['GET'])
-@custom_authmodule
 def ready(**kwargs):
     '''Provide Application Ready Status to the Outside World'''
     if check_ready():
