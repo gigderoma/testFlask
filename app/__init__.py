@@ -9,7 +9,7 @@
 
 import sys
 from flask import Flask, request, current_app
-from flask_migrate import Migrate
+
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
@@ -19,7 +19,7 @@ from config import Config
 from flask.logging import logging,default_handler
 
 
-migrate = Migrate()
+
 bootstrap = Bootstrap()
 
 
