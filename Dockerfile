@@ -30,8 +30,7 @@ RUN pip3.8 install -r requirements.txt
 #Expose Ports
 #Web Port
 EXPOSE 8080/tcp
-#Debug Port
-EXPOSE 5679/tcp
+
 
 #Change Permissions to allow not root-user work
 RUN chmod -R g+rw ./ && chmod +x runapp.sh
